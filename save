@@ -1,0 +1,103 @@
+Faça um Rubber Ducky com Arduino
+#Segurança da informação
+
+Fernando Schmitz
+29/11/2023 13:58
+Antes de começar, gostaria de enfatizar a importância da utilização ética deste tipo de conhecimento para fins educacionais. Embora encoraje a exploração e o aprendizado na área da segurança cibernética, lembre que é crucial respeitar os limites éticos e legais. O acesso não autorizado a sistemas, redes ou dados é uma violação séria. Recomendamos que todos os estudos e experimentos sejam realizados em ambientes controlados e com permissão explícita. A ética e o respeito pelas leis são fundamentais para garantir um uso responsável do conhecimento hacker.
+Você já ouviu falar sobre o Rubber Ducky? É uma ferramenta que pode ser usada para realizar ataques cibernéticos, mas também tem outros usos legítimos. Neste artigo, vamos explorar o que é o Rubber Ducky, como funciona e como fazer um utilizando um dispositivo compatível com Arduino.
+
+
+
+O que é o Rubber Ducky?
+O Rubber Ducky é um dispositivo USB disfarçado de um simples pen drive. Porém, por trás dessa aparência inofensiva, ele esconde um poderoso arsenal de ataques cibernéticos. Ele é programado para simular o comportamento de um teclado quando conectado a um computador. Isso significa que ele pode enviar comandos de teclado predefinidos em alta velocidade, permitindo a execução de ações automatizadas.
+
+
+
+Como funciona o Rubber Ducky?
+O funcionamento do Rubber Ducky é bastante simples. Quando conectado a um computador, ele se passa por um teclado USB e envia comandos pré-programados para a máquina. Esses comandos podem ser configurados de acordo com as necessidades do usuário. Por exemplo, é possível programar o Rubber Ducky para abrir um prompt de comando e executar um código malicioso que capture senhas ou realize outras atividades ilícitas. No entanto, é importante ressaltar que o Rubber Ducky também pode ser usado para fins legítimos, como automatizar tarefas repetitivas ou realizar testes de segurança.
+
+
+
+Conheçam o Digispark Attiny85
+
+
+O Digispark Attiny85 é um microcontrolador baseado no chip ATtiny85 da Atmel. Com um tamanho diminuto, é notável que este dispositivo embala uma quantidade significativa de funcionalidades em sua forma compacta. Possui entradas/saídas digitais e analógicas, permitindo a execução de uma variedade de projetos, mesmo com suas dimensões reduzidas.
+
+
+
+
+
+A Relação com o Arduino
+Uma das características mais empolgantes do Digispark Attiny85 é a sua compatibilidade com o ambiente de desenvolvimento Arduino. Isso significa que os entusiastas e desenvolvedores familiarizados com a plataforma Arduino podem facilmente adaptar seus projetos para funcionar com o Digispark.
+
+A programação é feita utilizando a IDE do Arduino, tornando a transição suave para aqueles que já têm experiência nesse ambiente. Com uma vasta biblioteca de código disponível, os projetos podem ser adaptados e estendidos facilmente.
+
+
+
+Chega de papo… quero ver o código!
+Primeiro Passo - Baixar e instalar o IDE Arduino
+Acesse https://www.arduino.cc/en/software e baixe e instale versão Legacy (1.8.x).
+Segundo Passo - Instalar os Drivers do Digispark
+Acesse o repositório do Digispark em https://github.com/digistump/digistumparduino/releases
+Faça o download do arquivo Digistump.Drivers.zip compatível com o seu sistema operacional.
+Terceiro Passo - Configurar a IDE Arduino para o Digispark
+Abra o Arduino IDE e vá para File > Preferences > Additional boards manager URLs.
+Cole o seguinte link: http://digistump.com/package_digistump_index.json.
+Clique em OK.
+Agora, instale as placas Digispark dentro do Arduino IDE, seguindo estas etapas:
+Vá para Tools > Boards > Board Manager.
+Utilize o filtro para procurar e selecione Digistump AVR Boards por Digistump e clique em instalar.
+Para definir o Digispark como padrão no Arduino IDE, siga estas instruções:
+Vá para Tools > Boards > Digistump AVR Board > Digispark (Padrão - 16.5 MHz)
+Caso tenha problemas para conectar seu Digispark, acesse: http://digistump.com/wiki/digispark/tutorials/connecting
+Quarto Passo - Seu primeiro script Rubber Ducky
+Crie um novo esboço com Arquivo > Novo esboço
+Cole o seguinte código:
+#include “DigiKeyboard.h”
+void setup() {
+  // No setup scripting is required, but this function is needed
+}
+void loop() {
+  // This is generally not necessary but with some older systems it seems to
+  // prevent missing the first character after a delay:
+  DigiKeyboard.sendKeyStroke(0);
+  // Open a command prompt
+  DigiKeyboard.sendKeyStroke(KEY_R, MOD_GUI_LEFT);
+  DigiKeyboard.delay(500);
+  DigiKeyboard.println(“cmd”);
+  DigiKeyboard.delay(500);
+  // Execute the following function in a command prompt
+  DigiKeyboard.println(“echo Pwned by Redacted Information Security”);
+  DigiKeyboard.delay(500);
+  // Blink the red LED when the code has finished executing
+  while (true)
+  {
+    digitalWrite(0, HIGH);
+    digitalWrite(1, HIGH);
+    delay(300);
+    digitalWrite(0, LOW);
+    digitalWrite(1, LOW);      
+    delay(300);
+  }
+}
+Clique em 'Verify' para garantir que o código funcionará.
+Clique em 'Upload' e conecte o Digispark quando for solicitado.
+Assim que o código for enviado, você está pronto! Divirta-se 😂.
+
+
+É só isso?
+Você não precisa parar por aqui. Visite o repositório https://github.com/CedArctic/DigiSpark-Scripts e conheça uma infinidade de payloads que você pode utilizar em seus testes.
+
+
+
+Conclusão
+O Rubber Ducky é um dispositivo poderoso que pode ser usado tanto para fins maliciosos quanto para fins legítimos. É importante estar ciente dos riscos associados ao uso dessa ferramenta e garantir que ela seja utilizada de forma ética. Para você, como estudante de segurança da informação, o Rubber Ducky pode ser uma adição valiosa ao seu kit de ferramentas. No entanto, lembre-se sempre de agir dentro da lei e obter permissão adequada antes de realizar testes de segurança em sistemas ou redes.
+
+
+
+Referências
+Repositório Digistump. Disponível em https://github.com/digistump/DigistumpArduino. Acesso em 29/11/2023.
+
+Connecting and Programming Your Digispark. Disponível em http://digistump.com/wiki/digispark/tutorials/connecting. Acesso em 29/11/2023.
+
+Repositório DigiSpark-Scripts. Disponível em https://github.com/CedArctic/DigiSpark-Scripts. Acesso em 29/11/2023.
